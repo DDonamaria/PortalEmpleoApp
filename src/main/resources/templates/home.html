@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>PortalEmpleoApp | Aplicación para publicar Ofertas de Trabajo</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/sticky-footer-navbar.css}" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header th:insert="fragmentos/menu :: menu-superior">
+    
+    </header>
+
+    <main role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <h3>Buscador de Vacantes</h3>
+          Búsqueda por descripción y categoría
+          <form class="form-inline" th:action="@{/search}" method="get" th:object="${search}">
+            <input type="text" class="form-control mb-3" th:field="*{descripcion}" placeholder="Escriba una búsqueda">&nbsp;
+            <select class="custom-select custom-select mb-3" th:field="*{categoria.id}">
+              <option th:value="${null}" selected>Seleccione una categoría</option>
+              <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+            </select>&nbsp;
+            <button type="submit" class="btn btn-success mb-3">Buscar</button>
+          </form>
+        </div>
+      </div> <!-- /jumbotron -->
+      <hr>
+
+      <div class="container"> 
+        <h2 class="font-weight-bold text-center text-capitalize">DESTACADOS</h2>
+        <hr>
+        <div class="row" th:each="vacante : ${vacantes}">
+          <div class="col-md-3">            
+            <img class="rounded mx-auto d-block" th:src="@{/logotipos/{img} (img=${vacante.imagen}) }" alt="Generic placeholder image" width="200" height="200">            
+          </div>
+          <div class="col-md-9">
+            <h2 th:text="${vacante.titulo}"></h2>
+            <h6 class="card-title"><strong>Categoría: </strong> <span th:text="${vacante.categoria.nombre}"></span></h6>
+            <h6 class="card-title"><strong>Publicado: </strong> <span th:text="${#dates.format(vacante.fecha, 'dd/MM/yyyy')}"></span></h6>                
+            <p th:text="${vacante.descripcion}"></p>
+            <p><a class="btn btn-success" th:href="@{/detail/{id} (id=${vacante.id}) }" role="button">Ver Detalles &raquo;</a></p> 
+            <br><br>           
+          </div>
+        </div>  
+		<hr>	
+      </div> <!-- /container -->
+
+    </main>
+
+    <footer th:insert="fragmentos/pie :: pie-pagina" class="footer">
+     
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="@{/bootstrap/js/bootstrap.min.js}"></script>
+  </body>
+</html>

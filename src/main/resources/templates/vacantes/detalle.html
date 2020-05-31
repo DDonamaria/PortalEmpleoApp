@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>PortalEmpleoApp | Detalles de la Oferta de Trabajo</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/sticky-footer-navbar.css}" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header th:insert="fragmentos/menu :: menu-superior"></header>
+
+    <main role="main">
+      <br>
+      <div class="container"> 
+
+        <div class="row">
+          <div class="col-md-3">            
+            <img class="rounded mx-auto d-block" th:src="@{/logotipos/{img} (img=${vacante.imagen}) }" alt="Generic placeholder image" width="220" height="220">            
+          </div>
+          <div class="col-md-9">
+            <div>
+              <h4><strong>Detalles de la Vacante</strong></h4><br>              
+              <div class="card-body">
+              	<h6 class="card-title"><strong>Titulo: </strong> <span th:text="${vacante.titulo}"></span></h5>
+                <h6 class="card-title"><strong>Categoría: </strong> <span th:text="${vacante.categoria.nombre}"></span></h5>
+                <h6 class="card-title"><strong>Fecha publicación: </strong> <span th:text="${#dates.format(vacante.fecha, 'dd/MM/yyyy')}"></span></h6>                
+                <h6 class="card-title"><strong>Salario: </strong><span th:text="${vacante.salario + ' €'}"></span></h6>
+                <p class="card-text" th:text="${vacante.descripcion}"></p>
+                <br><hr>
+                
+                <div class="bg-light mb-3" >
+                    <p class="card-text" th:utext="${vacante.detalles}"></p>
+                </div><br>  
+                 
+                <a class="btn btn-success" th:href="@{/solicitudes/create/{id} (id=${vacante.id}) }" role="button" title="Aplicar "><i class="fas fa-file" aria-hidden="true"></i> Aplicar</a> 
+              </div>
+            </div>  
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer th:insert="fragmentos/pie :: pie-pagina" class="footer"></footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+  </body>
+</html>

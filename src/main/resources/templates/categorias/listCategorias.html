@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+
+    <title>PortalEmpleoApp | Listado de Categorías</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/sticky-footer-navbar.css}" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <header th:insert="fragmentos/menu :: menu-superior"></header>
+
+    <main role="main"><br>
+      <div class="container"> 
+
+        <div>
+          <h4><strong>Listado de Categorías</strong></h4>              
+          <div class="card-body">
+            <a class="btn btn-success" th:href="@{/categorias/create}" role="button"><i class="fas fa-file" aria-hidden="true"></i> Nueva</a>            
+            <br><br>
+            
+            <div th:if="${mensaje != null}" class='alert alert-success' th:text="${mensaje}" role='alert'></div>
+            
+            <table class="table table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Operaciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="categoria : ${categorias}">
+                  <th th:text="${categoria.nombre}"></th>
+                  <td th:text="${categoria.descripcion}"></td>
+                  <td>
+                    <a th:href="@{/categorias/edit/{id} (id=${categoria.id}) }" class="btn btn-success btn-sm" role="button" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                    <a th:href="@{/categorias/delete/{id} (id=${categoria.id}) }" onclick="return confirm('¿Realmente desea eliminar la Categoria?')" class="btn btn-danger btn-sm" role="button" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+             <nav th:if="${categorias.totalPages > 0}" aria-label="Page navigation example" >
+				<ul class="pagination">
+					<li class="page-item"><a th:href="@{/categorias/indexPaginate(page=${categorias.number -1})}" class="page-link">Anterior</a></li>
+					<li class="page-item"><a th:href="@{/categorias/indexPaginate(page=${categorias.number +1})}" class="page-link">Siguiente</a></li>
+				</ul>
+			</nav>
+            
+          </div>
+        </div>
+      </div> 
+
+    </main>
+
+    <footer th:insert="fragmentos/pie :: pie-pagina" class="footer"></footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>     
+  </body>
+</html>
